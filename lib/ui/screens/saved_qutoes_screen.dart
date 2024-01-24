@@ -20,19 +20,18 @@ class _StoredQuotesState extends State<StoredQuotes> {
     loadQuotes();
   }
 
-  void loadQuotes() async{
+  void loadQuotes() async {
     setState(() {
-      working=false;
+      working = false;
     });
     await quoteService.loadQuotes();
     setState(() {
-      working=true;
+      working = true;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-
     return SafeArea(
       child: Scaffold(
         body: Stack(
@@ -53,50 +52,55 @@ class _StoredQuotesState extends State<StoredQuotes> {
                   ],
                 ),
               ),
-              padding:const EdgeInsets.symmetric(horizontal: 20, vertical: 100),
-              child: Container(
-
-              ),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 100),
+              child: Container(),
             ),
             Column(
               children: [
-                const SizedBox(height: 20,),
-                const Text('Saved Quotes',style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white
-                ),),
-                const SizedBox(height: 20,),
-                working?Expanded(
-                  child: ListView.builder(
-                      itemCount: quoteService.savedQuotes.length,
-                      itemBuilder: (context, index) {
-                        final Quote quote = quoteService.savedQuotes[index];
-                        return Card(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(25),
-                          ),
-                          margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                          child: ListTile(
-                            title: Center(
-                              child: Text(
-                                quote.owner,
-                                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
-                              ),
-                            ),
-                            subtitle: Padding(
-                              padding: const EdgeInsets.only(top: 15, bottom: 10),
-                              child: Text(
-                                '"${quote.quoteText}"',
-                                style: const TextStyle(fontSize: 20, fontStyle: FontStyle.italic),
-                              ),
-                            ),
-                          ),
-                        );
-                      }),
-                ):const Center(child: CircularProgressIndicator(
-                  color: Colors.black,
-                ),),
+                const SizedBox(
+                  height: 20,
+                ),
+                const Text(
+                  'Saved Quotes',
+                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                working
+                    ? Expanded(
+                        child: ListView.builder(
+                            itemCount: quoteService.savedQuotes.length,
+                            itemBuilder: (context, index) {
+                              final Quote quote = quoteService.savedQuotes[index];
+                              return Card(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(25),
+                                ),
+                                margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                                child: ListTile(
+                                  title: Center(
+                                    child: Text(
+                                      quote.owner,
+                                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+                                    ),
+                                  ),
+                                  subtitle: Padding(
+                                    padding: const EdgeInsets.only(top: 15, bottom: 10),
+                                    child: Text(
+                                      '"${quote.quoteText}"',
+                                      style: const TextStyle(fontSize: 20, fontStyle: FontStyle.italic),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }),
+                      )
+                    : const Center(
+                        child: CircularProgressIndicator(
+                          color: Colors.black,
+                        ),
+                      ),
               ],
             ),
           ],
@@ -106,7 +110,9 @@ class _StoredQuotesState extends State<StoredQuotes> {
           onPressed: () {
             Navigator.pop(context);
           },
-          child: const Icon(Icons.arrow_back,),
+          child: const Icon(
+            Icons.arrow_back,
+          ),
         ),
       ),
     );
